@@ -38,7 +38,44 @@ public class FXMLController {
 
     @FXML
     void doContaArchi(ActionEvent event) {
-
+    	txtResult.clear();
+    	
+    	this.model.creaGrafo();
+    	
+    	txtResult.appendText("Grafo Creato con successo!\n");
+    	txtResult.appendText("#Vertici: "+ this.model.getNVertici()+"\n");
+    	txtResult.appendText("#Archi: "+ this.model.getNArchi()+"\n");
+    	txtResult.appendText("Peso Minimo: "+ this.model.getMinPeso()+"\n");
+    	txtResult.appendText("Peso Massimo: "+ this.model.getMaxPeso()+"\n");
+    	
+    	
+    	if(!txtSoglia.getText().equals(""))
+    	{
+    		try
+    		{
+    			double s=Double.parseDouble(txtSoglia.getText());
+    			if(s>this.model.getMaxPeso())
+    	    	{
+    	    		txtResult.appendText("valore soglia superiore al max valore degli archi");
+    	    	}
+    	    	else if(s<this.model.getMinPeso())
+    	    	{
+    	    		txtResult.appendText("valore soglia inferiore al min valore degli archi");
+    	    	}
+    	    	else
+    	    	{
+    	    		txtResult.appendText("Soglia: "+s+"--> Maggiore: "+ this.model.GetArchiMaggiori(s)+
+    	    				", Minore: " + this.model.GetArchiMinori(s));
+    	    	}
+    		}
+    		catch(NumberFormatException e)
+    		{
+    			txtResult.clear();
+    			txtResult.setText("il valore soglia deve essere un numero");
+    			e.printStackTrace();
+    		}
+    	}
+    		
     }
 
     @FXML
